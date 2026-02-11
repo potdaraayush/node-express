@@ -1,25 +1,29 @@
-const http = require("http");
+const express = require("express");
+const app = express();
 
-const server = http.createServer(function(req, res) {
-    switch(req.url) {
-        case "/":
-            res.end(JSON.stringify({message: "say hi lil bro"}));
-            break;
-        case "/about":
-            res.end(JSON.stringify({message: "this is the about page"}));
-            break;
-        case "/api/users":
-            const users = [
-                {id: 1, name: "yush"},
-                {id: 2, name: "pants ok"}
-            ];
-            res.end(JSON.stringify(users));
-            break;
-        default:
-            res.end("404 error vro wrap it up");
-    }
+app.get("/", function(req, res) {
+    res.send("home");
 });
 
-server.listen(8000, function() {
+app.get("/about", function(req, res) {
+    res.send("this is about page");
+})
+
+app.get("/api/users", function(req, res) {
+    const users = [
+    {
+        "id": 1,
+        "firstName": "yush",
+        "lastName": "pantsok"
+    }, 
+    {
+        "id": 2,
+        "firstName": "spongebob",
+        "lastName": "pantsok"
+    }];
+    res.end(JSON.stringify(users));
+});
+
+app.listen(8000, function() {
     console.log("server is listening on port 8000");
-});
+})
