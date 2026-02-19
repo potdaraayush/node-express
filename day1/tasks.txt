@@ -1,5 +1,9 @@
-done. 1. Core: Setup Node project from scratch, implement GET /hello and POST /echo using http module 
+day 1:
+    done. 1. Core: Setup Node project from scratch, implement GET /hello and POST /echo using http module 
+    done. 2. Testing/Reflection: Send requests via curl/Postman, handle invalid JSON
+    done. Optional: Log every request with a timestamp
 
-done. 2. Testing/Reflection: Send requests via curl/Postman, handle invalid JSON
-
-done. Optional: Log every request with a timestamp
+day 2:
+    done. Core: Move endpoints to Express, implement logging middleware
+    done. Testing: Verify middleware order, experiment with next() behavior
+    done. Optional: Add a route-level middleware for one endpoint

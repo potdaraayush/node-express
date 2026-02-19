@@ -1,43 +1,47 @@
-const http = require("http");
-const url = require("url");
+const express = require("express");
 
+const app = express();
 const PORT = 8000;
 
-const server = http.createServer((req, res) => {
-    const parsedUrl = url.parse(req.url, true);
+app.use((req, res, next) => {
+    console.log(`${new Date().toLocaleString()} ${req.method} ${req.url}`);
+    next();
+});
 
-    if(req.url == "/favicon.ico") {
-        return res.end();
-    }
+app.get("/hello", (req, res, next) => {
+    if (Math.random() > 0.5) return next("route"); 
+    next(); 
+}, (req, res) => {
+    res.end("hi"); 
+});
 
-    const log = `${Date.now()}: ${req.url} new request recevied\n`;
-    console.log(log);
-    
+// Second /hello handler
+// app.get("/hello", (req, res) => {
+//     res.end("you came here cause the middleware let you thru secretly :)");
+// });
 
-    switch(parsedUrl.pathname) {
-        case "/hello" :
-            if(req.method === "GET") {
-                res.end("hi vro");
-                break;
-            }
-        case "/echo":
-            if(req.method === "POST") {
-                let body = "";
-                req.on("data", dataStream => body+=dataStream);
-                req.on("end", () => {
-                    try {
-                        const data = JSON.parse(body);
-                        res.end(JSON.stringify(data));
-                    } catch {
-                        res.end("couldnt parse. invalid json.")
-                    }
-                })
-            }
-            break;
-    }
+
+// app.get("/hello", (req, res) => {
+//     res.end("hi");
+// })
+
+app.get("/hello", (req, res) => {
+    res.end("you came here cause the middleware let you thru secretly :)")
 })
 
-server.listen(8000, () => {
-    console.log("server is listening on port 8000");
-    
+app.post("/echo", (req, res) => {
+    let body = "";
+
+    req.on("data", (chunk) => {
+        body += chunk;
+    })
+
+    req.on("end", () => {
+        res.end(`${body}`);
+    })
+
+})
+
+app.listen(PORT, () => {
+    console.log(`server is listening on port ${PORT}`);
 })
