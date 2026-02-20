@@ -7,3 +7,8 @@ day 2:
     done. Core: Move endpoints to Express, implement logging middleware
     done. Testing: Verify middleware order, experiment with next() behavior
     done. Optional: Add a route-level middleware for one endpoint
+
+day 3:
+    done. Core: Implement in-memory CRUD for a Todo API (GET, POST, PUT, DELETE)
+    done. Testing: Handle invalid IDs, missing fields, duplicate entries
+    Optional: Add filtering via query params (/todos?completed=true)
