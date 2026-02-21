@@ -12,3 +12,8 @@ day 3:
     done. Core: Implement in-memory CRUD for a Todo API (GET, POST, PUT, DELETE)
     done. Testing: Handle invalid IDs, missing fields, duplicate entries
     Optional: Add filtering via query params (/todos?completed=true)
+
+day 4:
+    done. Core: Add pagination and sorting for your Todos
+    done. Testing: Check /todos?page=2&limit=5, edge cases for empty pages
+    Optional: Implement search by title

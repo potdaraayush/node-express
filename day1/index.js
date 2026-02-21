@@ -9,6 +9,25 @@ app.use(express.json());
 
 const todos = [];
 
+function pagination(todos, pageSize, pageNumber) {
+    const startIdx = (pageNumber-1)*pageSize;
+    const endIdx = startIdx+pageSize;
+
+    const paginatedTodos = todos.slice(startIdx, endIdx);
+    return paginatedTodos;
+}
+
+function sortTodos(todos) {
+    todos.sort((a, b) => {
+        const titleA = a.title.toLowerCase();
+        const titleB = b.title.toLowerCase();
+
+        if(titleA < titleB) return -1;
+        if(titleA > titleB) return 1;
+        return 0;
+    })
+}
+
 function handleInvalidId(id) {
     const todo = todos.find(x => x.id === Number(id));
     if(!todo) {
@@ -33,7 +52,14 @@ function handleDuplicateEntries(title, description) {
 }
 
 app.get("/", (req, res) => {
-    res.json(todos);
+    const pageNumber = Number(req.query.pageNumber) || 1;
+    const pageSize = Number(req.query.pageSize) || todos.length;
+    sortTodos(todos);
+    if(pageNumber && pageSize) {
+        const paginatedTodos = pagination(todos, pageSize, pageNumber)
+        res.json(paginatedTodos);
+    }
+    else res.json(todos);
 });
 
 app.post("/add", (req, res) => {
